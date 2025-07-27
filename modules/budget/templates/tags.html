@@ -1,0 +1,23 @@
+{% extends 'base.html' %}  
+{% block content %}  
+<h2>报销类别管理</h2>  
+<ul class="list-group mb-3">  
+  {% for cat in categories %}  
+    <li class="list-group-item d-flex justify-content-between align-items-center">  
+      {{ cat.name }}  
+      <a class="btn btn-sm btn-danger" href="{{ url_for('budget.delete_tag', cat_id=cat.id) }}">删除</a>  
+    </li>  
+  {% endfor %}  
+  {% if categories|length == 0 %}  
+    <li class="list-group-item">无类别，请添加。</li>  
+  {% endif %}  
+</ul>  
+<h4>新增类别</h4>  
+<form method="post" class="form-inline">  
+  {{ form.hidden_tag() }}  
+  <div class="form-group mr-2">  
+    {{ form.name(class="form-control", placeholder="类别名称") }}  
+  </div>  
+  {{ form.submit(class="btn btn-primary") }}  
+</form>  
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}  
+{% block content %}  
+<h2>提交补习反馈</h2>  
+<p><strong>科目:</strong> {{ record.subject }} | <strong>学生:</strong> {{ record.student_name }} | <strong>日期:</strong> {{ record.date.strftime('%Y-%m-%d') }}</p>  
+<p><strong>内容摘要:</strong> {{ record.content }}</p>  
+<form method="post">  
+  {{ form.hidden_tag() }}  
+  <div class="form-group">  
+    <label for="feedback">反馈</label>  
+    {{ form.feedback(class="form-control", rows="4") }}  
+  </div>  
+  <button type="submit" class="btn btn-primary">提交反馈</button>  
+</form>  
+{% endblock %}

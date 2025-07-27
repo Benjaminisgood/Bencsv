@@ -1,0 +1,15 @@
+cd /home/Benork
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+# 默认（本地 5000 端口）
+python run.py
+
+# 指定端口
+python run.py --port 8080
+
+# 指定公网可访问
+python run.py --host 0.0.0.0
+
+# 开启调试模式 + 指定端口
+python run.py --debug --port 8000

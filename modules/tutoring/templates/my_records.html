@@ -1,0 +1,44 @@
+{% extends 'base.html' %}  
+{% block content %}  
+<h2>我的补习记录</h2>  
+<table class="table table-bordered table-sm">  
+  <thead class="thead-light">  
+    <tr>  
+      <th>ID</th>  
+      <th>学生</th>  
+      <th>科目</th>  
+      <th>日期</th>  
+      <th>反馈</th>  
+      <th>状态</th>  
+      <th>操作</th>  
+    </tr>  
+  </thead>  
+  <tbody>  
+    {% for rec in records %}  
+    <tr>  
+      <td>{{ rec.id }}</td>  
+      <td>{{ rec.student_name }}</td>  
+      <td>{{ rec.subject }}</td>  
+      <td>{{ rec.date.strftime('%Y-%m-%d') }}</td>  
+      <td>  
+        {% if rec.feedback %}{{ rec.feedback }}{% else %}<span class="text-muted">无反馈</span>{% endif %}  
+      </td>  
+      <td>  
+        {% if rec.status == 'pending' %}<span class="text-warning">待审核</span>  
+        {% elif rec.status == 'approved' %}<span class="text-success">已批准</span>  
+        {% elif rec.status == 'rejected' %}<span class="text-danger">已驳回</span>  
+        {% endif %}  
+      </td>  
+      <td>  
+        {% if not rec.feedback %}  
+          <a class="btn btn-info btn-sm" href="{{ url_for('tutoring.feedback', record_id=rec.id) }}">填写反馈</a>  
+        {% endif %}  
+      </td>  
+    </tr>  
+    {% endfor %}  
+    {% if records|length == 0 %}  
+    <tr><td colspan="7" class="text-center">没有提交任何补习记录</td></tr>  
+    {% endif %}  
+  </tbody>  
+</table>  
+{% endblock %}

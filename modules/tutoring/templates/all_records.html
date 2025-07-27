@@ -1,0 +1,40 @@
+{% extends 'base.html' %}  
+{% block content %}  
+<h2>所有补习记录</h2>  
+<div class="mb-2">  
+  <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('tutoring.export') }}">导出CSV</a>  
+</div>  
+<table class="table table-bordered table-sm">  
+  <thead class="thead-light">  
+    <tr>  
+      <th>ID</th>  
+      <th>导师</th>  
+      <th>学生</th>  
+      <th>科目</th>  
+      <th>日期</th>  
+      <th>时长</th>  
+      <th>反馈</th>  
+      <th>状态</th>  
+    </tr>  
+  </thead>  
+  <tbody>  
+    {% for rec in records %}  
+    <tr>  
+      <td>{{ rec.id }}</td>  
+      <td>{{ rec.submitter_name }}</td>  
+      <td>{{ rec.student_name }}</td>  
+      <td>{{ rec.subject }}</td>  
+      <td>{{ rec.date.strftime('%Y-%m-%d') }}</td>  
+      <td>{{ rec.hours }}小时</td>  
+      <td>{{ rec.feedback if rec.feedback else '-' }}</td>  
+      <td>  
+        {% if rec.status == 'pending' %}<span class="text-warning">待审核</span>  
+        {% elif rec.status == 'approved' %}<span class="text-success">已批准</span>  
+        {% elif rec.status == 'rejected' %}<span class="text-danger">已驳回</span>  
+        {% endif %}  
+      </td>  
+    </tr>  
+    {% endfor %}  
+  </tbody>  
+</table>  
+{% endblock %}

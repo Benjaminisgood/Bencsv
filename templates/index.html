@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="jumbotron">
+  <h1 class="display-4">欢迎使用综合管理系统</h1>
+  <p class="lead">这是一个包含 <strong>报销</strong> 和 <strong>补习</strong> 模块的 Flask 应用。未来项目多了之后，这个页面只是用于展示各个模块的入口。也就是说，其实每个项目模块自身还需要一个index页面，暂时我把两个项目的链接都搬到这个页面了，暂时也没有给两个项目制作index页面</p>
+  <hr class="my-4">
+
+  {% if current_user.is_authenticated %}
+    <p>您好，<strong>{{ current_user.username }}</strong>！</p>
+
+    <!-- 入口按钮 -->
+    <div class="mb-4">
+      <a class="btn btn-primary btn-lg me-2" href="{{ url_for('budget.submit') }}" role="button">进入报销系统（的主页）</a>
+      <a class="btn btn-success btn-lg" href="{{ url_for('tutoring.submit') }}" role="button">进入补习系统（的主页）</a>
+    </div>
+
+    <!-- 管理员功能 -->
+    {% if current_user.is_admin %}
+    <h4>管理员功能</h4>
+    <div class="row">
+      <div class="col-md-6">
+        <h5>📑 报销管理</h5>
+        <ul class="list-group mb-3">
+          <li class="list-group-item"><a href="{{ url_for('budget.pending') }}">📥 审批报销请求</a></li>
+          <li class="list-group-item"><a href="{{ url_for('budget.tags') }}">📂 管理报销类别</a></li>
+          <li class="list-group-item"><a href="{{ url_for('budget.stats') }}">📊 报销统计图表</a></li>
+          <li class="list-group-item"><a href="{{ url_for('budget.export') }}">📁 导出报销记录</a></li>
+        </ul>
+      </div>
+      <div class="col-md-6">
+        <h5>👨‍🏫 补习管理</h5>
+        <ul class="list-group mb-3">
+          <li class="list-group-item"><a href="{{ url_for('tutoring.admin_pending') }}">📝 审核补习记录</a></li>
+          <li class="list-group-item"><a href="{{ url_for('tutoring.all_records') }}">📋 查看全部补习记录</a></li>
+          <li class="list-group-item"><a href="{{ url_for('tutoring.export') }}">📁 导出补习记录</a></li>
+        </ul>
+      </div>
+    </div>
+
+    {% else %}
+    <!-- 普通用户功能 -->
+    <h5>我的记录</h5>
+    <ul class="list-group mb-4">
+      <li class="list-group-item">
+        <a href="{{ url_for('budget.my_requests') }}">💰 我的报销记录</a>
+      </li>
+      <li class="list-group-item">
+        <a href="{{ url_for('tutoring.my_records') }}">📚 我的补习记录</a>
+      </li>
+    </ul>
+    {% endif %}
+
+    <a class="btn btn-outline-danger" href="{{ url_for('auth.logout') }}">退出登录</a>
+
+  {% else %}
+    <p class="text-muted">请先登录以使用系统功能：</p>
+    <a class="btn btn-warning btn-lg" href="{{ url_for('auth.login') }}">使用微信登录</a>
+    <a class="btn btn-warning btn-lg" href="{{ url_for('auth.local_login') }}">直接本地登录</a>
+  {% endif %}
+</div>
+{% endblock %}

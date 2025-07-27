@@ -1,0 +1,29 @@
+{% extends 'base.html' %}  
+{% block content %}  
+<h2>提交报销请求</h2>  
+<form method="post">  
+  {{ form.hidden_tag() }}  
+  <div class="form-group">  
+    {% if current_user.is_authenticated %}  
+      <!-- 已登录用户，不显示姓名输入，使用隐藏字段 -->  
+      <input type="hidden" name="name" value="{{ current_user.username }}">  
+    {% else %}  
+      <label for="name">姓名</label>  
+      {{ form.name(class="form-control") }}  
+    {% endif %}  
+  </div>  
+  <div class="form-group">  
+    <label for="category_id">报销类别</label>  
+    {{ form.category_id(class="form-control") }}  
+  </div>  
+  <div class="form-group">  
+    <label for="amount">金额</label>  
+    {{ form.amount(class="form-control") }}  
+  </div>  
+  <div class="form-group">  
+    <label for="description">描述</label>  
+    {{ form.description(class="form-control", rows="3") }}  
+  </div>  
+  <button type="submit" class="btn btn-primary">提交</button>  
+</form>  
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}  
+{% block content %}  
+<h2>报销统计图表</h2>  
+<canvas id="statsChart" width="400" height="300"></canvas>  
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
+<script>  
+  const ctx = document.getElementById('statsChart').getContext('2d');  
+  const chart = new Chart(ctx, {  
+    type: 'pie',  
+    data: {  
+      labels: {{ labels|tojson }},  
+      datasets: [{  
+        label: '各类别报销总额',  
+        data: {{ values|tojson }},  
+        backgroundColor: [  
+          'rgba(255, 99, 132, 0.6)',  
+          'rgba(54, 162, 235, 0.6)',  
+          'rgba(255, 206, 86, 0.6)',  
+          'rgba(75, 192, 192, 0.6)',  
+          'rgba(153, 102, 255, 0.6)',  
+          'rgba(255, 159, 64, 0.6)'  
+        ]  
+      }]  
+    },  
+    options: {  
+      responsive: true  
+    }  
+  });  
+</script>  
+{% endblock %}

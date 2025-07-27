@@ -1,0 +1,38 @@
+{% extends 'base.html' %}  
+{% block content %}  
+<h2>待审核补习记录</h2>  
+<table class="table table-bordered table-sm">  
+  <thead class="thead-light">  
+    <tr>  
+      <th>ID</th>  
+      <th>导师</th>  
+      <th>学生</th>  
+      <th>科目</th>  
+      <th>日期</th>  
+      <th>反馈</th>  
+      <th>操作</th>  
+    </tr>  
+  </thead>  
+  <tbody>  
+    {% for rec in records %}  
+    <tr>  
+      <td>{{ rec.id }}</td>  
+      <td>{{ rec.submitter_name }}</td>  
+      <td>{{ rec.student_name }}</td>  
+      <td>{{ rec.subject }}</td>  
+      <td>{{ rec.date.strftime('%Y-%m-%d') }}</td>  
+      <td>  
+        {% if rec.feedback %}<span class="text-success">已提交</span>{% else %}<span class="text-warning">无</span>{% endif %}  
+      </td>  
+      <td>  
+        <a class="btn btn-success btn-sm" href="{{ url_for('tutoring.approve_record', record_id=rec.id) }}">通过</a>  
+        <a class="btn btn-danger btn-sm" href="{{ url_for('tutoring.reject_record', record_id=rec.id) }}">驳回</a>  
+      </td>  
+    </tr>  
+    {% endfor %}  
+    {% if records|length == 0 %}  
+    <tr><td colspan="7" class="text-center">暂无待审核记录</td></tr>  
+    {% endif %}  
+  </tbody>  
+</table>  
+{% endblock %}
