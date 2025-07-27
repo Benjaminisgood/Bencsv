@@ -13,3 +13,7 @@ python run.py --host 0.0.0.0
 
 # 开启调试模式 + 指定端口
 python run.py --debug --port 8000
+
+git add .
+git commit -m "💡 更新说明"
+git push
